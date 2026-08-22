@@ -7,6 +7,8 @@ const fromCurr = document.querySelector(".from select");
 const toCurr = document.querySelector(".to select");
 const msg = document.querySelector(".msg");
 
+const swapBtn = document.querySelector(".fa-arrow-right-arrow-left");
+
 for (let select of dropdowns) {
   for (let currCode in countryList) {
     let newOption = document.createElement("option");
@@ -30,12 +32,16 @@ for (let select of dropdowns) {
 
 const updateExchangeRate = async () => {
   let amount = document.querySelector(".amount input");
-  let amtVal = amount.value;
+  let amtVal = parseFloat(amount.value);
 
-  if (amtVal === "" || amtVal < 1) {
-    amtVal = 1;
-    amount.value = "1";
+  if (isNaN(amtVal) || amtVal <= 0) {
+    msg.innerText = "Please enter a valid amount greater than 0.";
+    return;
   }
+
+  // Show loading message
+  msg.innerText = "Getting exchange rate...";
+  msg.classList.add("loading");
 
   const URL = `${BASE_URL}/${fromCurr.value.toLowerCase()}.json`;
 
@@ -47,6 +53,7 @@ const updateExchangeRate = async () => {
 
   let finalAmount = amtVal * rate;
 
+  msg.classList.remove("loading");
   msg.innerText = `${amtVal} ${fromCurr.value} = ${finalAmount} ${toCurr.value}`;
 };
 
@@ -66,5 +73,17 @@ btn.addEventListener("click", (evt) => {
 });
 
 window.addEventListener("load", () => {
+  updateExchangeRate();
+});
+
+swapBtn.addEventListener("click", () => {
+  let temp = fromCurr.value;
+
+  fromCurr.value = toCurr.value;
+  toCurr.value = temp;
+
+  updateFlag(fromCurr);
+  updateFlag(toCurr);
+
   updateExchangeRate();
 });
