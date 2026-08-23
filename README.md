@@ -4,7 +4,7 @@ A responsive currency converter web application built using HTML, CSS, and JavaS
 
 ## 🚀 Live Demo
 
-Coming soon...
+🔗 [Click here to use the Currency Converter](https://arunjain101.github.io/Currency-Converter/)
 
 ## 📌 Features
 
