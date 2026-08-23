@@ -39,22 +39,39 @@ const updateExchangeRate = async () => {
     return;
   }
 
-  // Show loading message
   msg.innerText = "Getting exchange rate...";
   msg.classList.add("loading");
 
-  const URL = `${BASE_URL}/${fromCurr.value.toLowerCase()}.json`;
+  try {
+    const URL = `${BASE_URL}/${fromCurr.value.toLowerCase()}.json`;
 
-  let response = await fetch(URL);
-  let data = await response.json();
+    let response = await fetch(URL);
 
-  let rate =
-    data[fromCurr.value.toLowerCase()][toCurr.value.toLowerCase()];
+    // Check if API request was successful
+    if (!response.ok) {
+      throw new Error("Unable to fetch exchange rate.");
+    }
 
-  let finalAmount = amtVal * rate;
+    let data = await response.json();
 
-  msg.classList.remove("loading");
-  msg.innerText = `${amtVal} ${fromCurr.value} = ${finalAmount} ${toCurr.value}`;
+    let rate =
+      data[fromCurr.value.toLowerCase()][toCurr.value.toLowerCase()];
+
+    if (!rate) {
+      throw new Error("Exchange rate not available.");
+    }
+
+    let finalAmount = amtVal * rate;
+
+    msg.classList.remove("loading");
+    msg.innerText = `${amtVal} ${fromCurr.value} = ${finalAmount} ${toCurr.value}`;
+
+  } catch (error) {
+    msg.classList.remove("loading");
+    msg.innerText = "Unable to fetch exchange rate. Please try again.";
+
+    console.error("Currency API Error:", error);
+  }
 };
 
 const updateFlag = (element) => {
