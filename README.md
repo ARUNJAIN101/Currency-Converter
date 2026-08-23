@@ -6,6 +6,10 @@ A responsive currency converter web application built using HTML, CSS, and JavaS
 
 🔗 [Click here to use the Currency Converter](https://arunjain101.github.io/Currency-Converter/)
 
+## 📸 Project Preview
+
+![Currency Converter Preview](currency-converter-preview-1.png)
+
 ## 📌 Features
 
 - 🌍 Supports multiple currencies
