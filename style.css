@@ -142,3 +142,95 @@ form button {
     width: 100%;
   }
 }
+
+#themeBtn {
+  width: auto;
+  padding: 0.35rem 0.6rem;
+  margin: 0 0 0.5rem auto;
+  display: block;
+  background-color: #333;
+  color: #fff;
+  cursor: pointer;
+  font-size: 0.75rem;
+  border-radius: 0.5rem;
+}
+
+body.dark-mode {
+  background-color: #1e1e1e;
+}
+
+body.dark-mode .container {
+  background-color: #2b2b2b;
+  color: #fff;
+}
+
+body.dark-mode form input {
+  background-color: #3a3a3a;
+  color: #fff;
+  border-color: #555;
+}
+
+body.dark-mode .select-container {
+  background-color: #3a3a3a;
+  border-color: #555;
+}
+
+body.dark-mode .select-container select {
+  background-color: #3a3a3a;
+  color: #fff;
+}
+
+body.dark-mode .msg {
+  color: #fff;
+}
+
+body.dark-mode #themeBtn {
+  background-color: #f4e4ba;
+  color: #222;
+}
+
+body.dark-mode #historyList li {
+  background-color: #3a3a3a;
+  color: #fff;
+}
+
+body.dark-mode #clearHistory {
+  background-color: #555;
+}
+
+.history {
+  margin-top: 2rem;
+}
+
+.history-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.history-header h3 {
+  font-size: 1rem;
+}
+
+#clearHistory {
+  width: auto;
+  padding: 0.35rem 0.6rem;
+  background-color: #777;
+  color: #fff;
+  font-size: 0.75rem;
+  cursor: pointer;
+}
+
+#historyList {
+  list-style: none;
+  padding: 0;
+}
+
+#historyList li {
+  padding: 0.6rem;
+  margin-bottom: 0.5rem;
+  background-color: #f4f4f4;
+  border-radius: 0.5rem;
+  font-size: 0.85rem;
+}

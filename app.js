@@ -7,7 +7,11 @@ const fromCurr = document.querySelector(".from select");
 const toCurr = document.querySelector(".to select");
 const msg = document.querySelector(".msg");
 
+const historyList = document.querySelector("#historyList");
+const clearHistoryBtn = document.querySelector("#clearHistory");
+
 const swapBtn = document.querySelector(".fa-arrow-right-arrow-left");
+const themeBtn = document.querySelector("#themeBtn");
 
 for (let select of dropdowns) {
   for (let currCode in countryList) {
@@ -30,7 +34,7 @@ for (let select of dropdowns) {
   });
 }
 
-const updateExchangeRate = async () => {
+const updateExchangeRate = async (saveToHistory = true) => {
   let amount = document.querySelector(".amount input");
   let amtVal = parseFloat(amount.value);
 
@@ -62,9 +66,21 @@ const updateExchangeRate = async () => {
     }
 
     let finalAmount = amtVal * rate;
+    let formattedAmount = finalAmount.toFixed(2);
 
     msg.classList.remove("loading");
-    msg.innerText = `${amtVal} ${fromCurr.value} = ${finalAmount} ${toCurr.value}`;
+    msg.innerText = `${amtVal} ${fromCurr.value} = ${formattedAmount} ${toCurr.value}`;
+
+    if (saveToHistory) {
+  saveConversion({
+    amount: amtVal,
+    from: fromCurr.value,
+    result: formattedAmount,
+    to: toCurr.value
+  });
+
+  displayHistory();
+}
 
   } catch (error) {
     msg.classList.remove("loading");
@@ -84,13 +100,41 @@ const updateFlag = (element) => {
   img.src = newSrc;
 };
 
+const saveConversion = (conversion) => {
+  let history = JSON.parse(localStorage.getItem("conversionHistory")) || [];
+
+  history.unshift(conversion);
+
+  // Keep only the latest 5 conversions
+  history = history.slice(0, 5);
+
+  localStorage.setItem("conversionHistory", JSON.stringify(history));
+};
+
+const displayHistory = () => {
+  let history = JSON.parse(localStorage.getItem("conversionHistory")) || [];
+
+  historyList.innerHTML = "";
+
+  history.forEach((conversion) => {
+    let li = document.createElement("li");
+
+    li.innerText =
+      //`${conversion.amount} ${conversion.from} = ${Number(conversion.result).toFixed(2)} ${conversion.to}`
+      `${conversion.amount} ${conversion.from} = ${conversion.result} ${conversion.to}`;
+
+    historyList.append(li);
+  });
+};
+
 btn.addEventListener("click", (evt) => {
   evt.preventDefault();
   updateExchangeRate();
 });
 
 window.addEventListener("load", () => {
-  updateExchangeRate();
+  displayHistory();
+  updateExchangeRate(false);
 });
 
 swapBtn.addEventListener("click", () => {
@@ -103,4 +147,19 @@ swapBtn.addEventListener("click", () => {
   updateFlag(toCurr);
 
   updateExchangeRate();
+});
+
+themeBtn.addEventListener("click", () => {
+  document.body.classList.toggle("dark-mode");
+
+  if (document.body.classList.contains("dark-mode")) {
+    themeBtn.innerText = "☀️ Light Mode";
+  } else {
+    themeBtn.innerText = "🌙 Dark Mode";
+  }
+});
+
+clearHistoryBtn.addEventListener("click", () => {
+  localStorage.removeItem("conversionHistory");
+  displayHistory();
 });
