@@ -85,3 +85,60 @@ form button {
   color: #666;
   font-style: italic;
 }
+
+@media (max-width: 600px) {
+  body {
+    padding: 1rem;
+    box-sizing: border-box;
+  }
+
+  .container {
+    width: 100%;
+    min-height: auto;
+    padding: 1.5rem;
+    box-sizing: border-box;
+  }
+
+  h2 {
+    font-size: 1.5rem;
+  }
+
+  .amount input {
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .dropdown {
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .dropdown i {
+    transform: rotate(90deg);
+    margin-top: 0;
+  }
+
+  .from,
+  .to {
+    width: 100%;
+  }
+
+  .select-container {
+    width: 100%;
+    box-sizing: border-box;
+    justify-content: flex-start;
+  }
+
+  .select-container select {
+    width: 100%;
+  }
+
+  .msg {
+    text-align: center;
+    font-size: 0.95rem;
+  }
+
+  form button {
+    width: 100%;
+  }
+}
