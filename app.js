@@ -76,7 +76,15 @@ const updateExchangeRate = async (saveToHistory = true) => {
     amount: amtVal,
     from: fromCurr.value,
     result: formattedAmount,
-    to: toCurr.value
+    to: toCurr.value,
+    date: new Date().toLocaleString("en-IN", {
+      day: "2-digit",
+      month: "short",
+      year: "numeric",
+      hour: "2-digit",
+      minute: "2-digit"
+    })
+
   });
 
   displayHistory();
@@ -121,7 +129,7 @@ const displayHistory = () => {
 
     li.innerText =
       //`${conversion.amount} ${conversion.from} = ${Number(conversion.result).toFixed(2)} ${conversion.to}`
-      `${conversion.amount} ${conversion.from} = ${conversion.result} ${conversion.to}`;
+      `${conversion.amount} ${conversion.from} = ${conversion.result} ${conversion.to}\n${conversion.date}`;
 
     historyList.append(li);
   });
